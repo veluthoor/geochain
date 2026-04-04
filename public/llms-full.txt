@@ -1,0 +1,127 @@
+# GeoChain — Complete Documentation
+
+> A free online geography game where you chain countries together by borders, continents, and letter patterns.
+
+Website: https://www.geo-chain.com
+Creator: https://x.com/veluthoor
+
+## Overview
+
+GeoChain is an educational geography game that challenges players to build the longest chain of countries possible in 2 minutes. Each country in the chain must satisfy a rule connecting it to the previous country — such as sharing a border, being on the same continent, or starting with a specific letter.
+
+The game is completely free, requires no sign-up, and works on any modern browser (desktop and mobile).
+
+## Gameplay
+
+1. The player enters their name (optional, used for leaderboard)
+2. They choose a difficulty level: Easy or Hard
+3. A random starting country is selected
+4. A challenge rule is presented (e.g., "Name a country that borders Japan")
+5. The player types a country name and submits
+6. If correct: the country is added to the chain, score increases, a new rule appears
+7. If wrong: feedback is shown with a hint
+8. The game ends when the 2-minute timer expires or no valid moves remain
+9. The result screen shows: score, chain length, possible answers for the last challenge, and leaderboard placement
+
+## Difficulty Levels
+
+### Easy
+- Rule types: borders, same continent, starts with same letter, starts with last letter
+- Score multiplier: 1x
+
+### Hard (Recommended for geography enthusiasts)
+- Rule types: all Easy rules + capital letter match
+- Score multiplier: 2x
+
+## Scoring
+
+- Base points per correct answer: 100
+- Streak bonus: +25 per consecutive correct answer (max +200)
+- Difficulty multiplier applied on top
+- Leaderboard tracks top 20 scores per difficulty
+
+## Rule Types Explained
+
+### Borders
+"Name a country that borders [country]"
+The answer must share a land border with the current country. Island nations with no land borders will never get this rule.
+
+### Same Continent
+"Name a country in [continent]"
+The answer must be on the same continent (Africa, Asia, Europe, North America, South America, or Oceania).
+
+### Starts With Same Letter
+"Name a country starting with [letter]"
+The answer's name must begin with the same letter as the current country. Autocomplete is hidden for this rule to make it more challenging.
+
+### Starts With Last Letter
+"Name a country starting with [letter]"
+The answer's name must begin with the last letter of the current country's name. Autocomplete is hidden for this rule.
+
+### Capital Letter Match (Hard only)
+"Name a country whose capital starts with [letter]"
+The answer must have a capital city starting with the same letter as the current country's capital.
+
+## Smart Features
+
+### Fuzzy Name Matching
+Players can type approximate country names. The game recognizes:
+- Abbreviations: USA, UK, UAE, DRC
+- Common names: America, Britain, Holland, Burma
+- Historical names: Persia, Siam, Czechoslovakia
+- Misspellings: Columbia → Colombia, Brasil → Brazil
+
+### Dead-End Prevention
+Before presenting a rule, the engine verifies at least one valid unused country exists. If no rule has a valid answer, the game ends gracefully with "No more moves!" instead of leaving the player stuck.
+
+### Autocomplete
+An autocomplete dropdown shows the top 5 matching countries as the player types. This is intentionally disabled for letter-based rules (starts with same/last letter) to make those challenges test recall.
+
+## Data
+
+- 197 countries with ISO 3166-1 alpha-2 codes
+- Accurate land border adjacency data
+- Country metadata: name, capital, continent, population, flag emoji, landlocked status
+- ~100 alternate name mappings
+
+## Technical Stack
+
+- React + TypeScript + Vite (frontend only, no backend)
+- Tailwind CSS for styling
+- Framer Motion for animations
+- Fuse.js for fuzzy search
+- localStorage for stats and leaderboard persistence
+
+## Comparisons to Other Geography Games
+
+| Feature | GeoChain | GeoGuessr | Seterra | Sporcle Geography |
+|---------|----------|-----------|---------|-------------------|
+| Free | Yes | Freemium | Yes | Yes (with ads) |
+| Unique mechanic | Country chaining | Street view guessing | Map clicking | Timed lists |
+| Teaches borders | Yes | Indirectly | Yes | No |
+| No sign-up needed | Yes | No | Yes | No |
+| Mobile friendly | Yes | Yes | Yes | Partial |
+| Timed challenge | 2 min | Varies | Optional | Yes |
+
+## FAQ
+
+Q: What is GeoChain?
+A: GeoChain is a free online geography game where you chain countries together based on rules like shared borders, same continent, or letter patterns. Play at geo-chain.com.
+
+Q: How do I play GeoChain?
+A: Start with a random country, then type countries that satisfy each challenge rule. Build the longest chain in 2 minutes.
+
+Q: Is GeoChain free?
+A: Yes, completely free with no ads and no sign-up required.
+
+Q: What makes GeoChain different from other geography games?
+A: GeoChain's unique chaining mechanic means each answer depends on your previous one, creating a dynamic path across the globe. It tests broader geographic knowledge than simple map quizzes.
+
+Q: Can I play on my phone?
+A: Yes, GeoChain is fully responsive and works on mobile browsers.
+
+Q: How is the leaderboard tracked?
+A: Scores are saved locally in your browser per difficulty level (Easy and Hard), tracking the top 20 scores.
+
+Q: Who made GeoChain?
+A: GeoChain was made by @veluthoor. Feedback can be sent via X (Twitter) at https://x.com/veluthoor.

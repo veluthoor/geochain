@@ -1,0 +1,37 @@
+# GeoChain
+
+> A free online geography game where you chain countries together.
+
+GeoChain is a fast-paced geography game at [geo-chain.com](https://www.geo-chain.com). Players connect countries based on rules like shared borders, same continent, or letter patterns — all within a 2-minute timer.
+
+## How It Works
+
+- You start with a random country
+- A challenge appears (e.g., "Name a country that borders Germany")
+- Type a valid country to extend the chain
+- Build the longest chain before time runs out
+- Two difficulty levels: Easy and Hard
+
+## Key Features
+
+- 197 countries with accurate border data
+- Fuzzy name matching (handles typos and abbreviations like USA, UK, Holland)
+- Smart rule engine that prevents dead-end chains
+- Per-difficulty leaderboards
+- Country facts (capital, population, continent) shown during gameplay
+- No sign-up required, completely free
+- Works on desktop and mobile
+
+## Rule Types
+
+- **Borders**: Name a country sharing a land border
+- **Same Continent**: Name a country on the same continent
+- **Starts With Same Letter**: Name a country starting with the same letter
+- **Starts With Last Letter**: Name a country starting with the last letter of the previous country
+- **Capital Letter Match** (Hard only): Name a country whose capital starts with the same letter
+
+## Links
+
+- Website: https://www.geo-chain.com
+- Creator: https://x.com/veluthoor
+- Full docs: https://www.geo-chain.com/llms-full.txt
