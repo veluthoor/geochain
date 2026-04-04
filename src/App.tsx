@@ -9,7 +9,7 @@ import { Leaderboard } from './components/screens/Leaderboard';
 function App() {
   const {
     state, stats, playerName, setPlayerName,
-    timer, startGame, submitAnswer, quitGame, saveStats, resetToMenu,
+    timer, startGame, submitAnswer, revealAnswer, quitGame, saveStats, resetToMenu,
   } = useGame();
   const [showLeaderboard, setShowLeaderboard] = useState(false);
 
@@ -38,6 +38,7 @@ function App() {
             state={state}
             timeRemaining={timer.timeRemaining}
             onSubmit={submitAnswer}
+            onReveal={revealAnswer}
             onQuit={quitGame}
           />
         )}

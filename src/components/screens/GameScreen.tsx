@@ -12,10 +12,11 @@ interface GameScreenProps {
   state: GameState;
   timeRemaining: number;
   onSubmit: (input: string) => void;
+  onReveal: () => void;
   onQuit: () => void;
 }
 
-export function GameScreen({ state, timeRemaining, onSubmit, onQuit }: GameScreenProps) {
+export function GameScreen({ state, timeRemaining, onSubmit, onReveal, onQuit }: GameScreenProps) {
   const lastCountry = state.chain[state.chain.length - 1]?.country;
 
   return (
@@ -44,7 +45,7 @@ export function GameScreen({ state, timeRemaining, onSubmit, onQuit }: GameScree
         <div className="flex-1 flex flex-col gap-4">
           <ChainDisplay chain={state.chain} />
           {state.currentRule && <RuleCard rule={state.currentRule} />}
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center gap-3">
             <CountryInput
               onSubmit={onSubmit}
               disabled={state.status !== 'playing'}
@@ -54,6 +55,16 @@ export function GameScreen({ state, timeRemaining, onSubmit, onQuit }: GameScree
               }
             />
           </div>
+          {state.status === 'playing' && (
+            <div className="flex justify-center">
+              <button
+                onClick={onReveal}
+                className="text-sm text-gray-400 dark:text-gray-500 hover:text-ocean-500 dark:hover:text-ocean-400 transition-colors"
+              >
+                Stuck? Reveal an answer (-15s)
+              </button>
+            </div>
+          )}
           <Feedback feedback={state.lastFeedback} />
         </div>
 

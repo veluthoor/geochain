@@ -64,5 +64,17 @@ export function useTimer({ onExpire }: UseTimerOptions) {
     setTimeRemaining(0);
   }, [clear]);
 
-  return { timeRemaining, isRunning, start, pause, resume, stop };
+  const penalize = useCallback((seconds: number) => {
+    setTimeRemaining((prev) => {
+      const next = prev - seconds;
+      if (next <= 0) {
+        setIsRunning(false);
+        onExpireRef.current();
+        return 0;
+      }
+      return next;
+    });
+  }, []);
+
+  return { timeRemaining, isRunning, start, pause, resume, stop, penalize };
 }

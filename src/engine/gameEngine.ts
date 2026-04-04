@@ -110,6 +110,37 @@ function generateHint(
   return `Try a country starting with "${firstLetter}" (${length} letters)`;
 }
 
+export const REVEAL_PENALTY = 15;
+
+export function revealAnswer(state: GameState): GameState {
+  if (state.status !== 'playing' || !state.currentRule) return state;
+
+  const lastCountry = state.chain[state.chain.length - 1].country;
+  const valid = getValidCountries(state.currentRule.type, lastCountry, countries, state.usedCountries);
+  if (valid.length === 0) return state;
+
+  // Pick a random valid answer and auto-add it
+  const revealed = valid[Math.floor(Math.random() * valid.length)];
+  const newUsed = new Set(state.usedCountries);
+  newUsed.add(revealed.code);
+
+  const nextRule = generateRule(revealed, state.difficulty, newUsed);
+
+  return {
+    ...state,
+    chain: [...state.chain, { country: revealed, rule: state.currentRule }],
+    currentRule: nextRule,
+    usedCountries: newUsed,
+    streak: 0,
+    lastFeedback: {
+      type: 'correct',
+      message: `${revealed.flag} ${revealed.name} revealed! (-${REVEAL_PENALTY}s penalty)`,
+    },
+    status: nextRule ? 'playing' : 'ended',
+    endReason: nextRule ? undefined : 'no_moves',
+  };
+}
+
 export function endGame(state: GameState, reason: 'timeout' | 'quit'): GameState {
   let possibleAnswers: string[] = [];
   if (state.currentRule && state.chain.length > 0) {

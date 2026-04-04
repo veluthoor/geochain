@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import type { Difficulty, GameState, PlayerStats, LeaderboardEntry, LeaderboardData } from '../types';
-import { initGame, submitAnswer, endGame } from '../engine/gameEngine';
+import { initGame, submitAnswer, endGame, revealAnswer, REVEAL_PENALTY } from '../engine/gameEngine';
 import { useTimer } from './useTimer';
 import { useLocalStorage } from './useLocalStorage';
 import { INITIAL_STATS } from '../utils/constants';
@@ -58,6 +58,18 @@ export function useGame() {
   const quitGame = useCallback(() => {
     timer.stop();
     setState((prev) => endGame(prev, 'quit'));
+  }, [timer]);
+
+  const handleReveal = useCallback(() => {
+    setState((prev) => {
+      const next = revealAnswer(prev);
+      if (next.status === 'ended') {
+        timer.stop();
+      }
+      return next;
+    });
+    // Apply time penalty
+    timer.penalize(REVEAL_PENALTY);
   }, [timer]);
 
   const saveStats = useCallback(() => {
@@ -133,6 +145,7 @@ export function useGame() {
     timer,
     startGame,
     submitAnswer: handleSubmit,
+    revealAnswer: handleReveal,
     quitGame,
     saveStats,
     resetToMenu,
