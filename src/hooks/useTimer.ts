@@ -20,18 +20,15 @@ export function useTimer({ onExpire }: UseTimerOptions) {
 
   const start = useCallback((seconds: number) => {
     clear();
-    if (seconds <= 0) {
-      // Unlimited mode
-      setTimeRemaining(0);
-      setIsRunning(false);
-      return;
-    }
     setTimeRemaining(seconds);
     setIsRunning(true);
   }, [clear]);
 
   useEffect(() => {
-    if (!isRunning || timeRemaining <= 0) return;
+    if (!isRunning) {
+      clear();
+      return;
+    }
 
     intervalRef.current = setInterval(() => {
       setTimeRemaining((prev) => {
@@ -45,24 +42,23 @@ export function useTimer({ onExpire }: UseTimerOptions) {
     }, 1000);
 
     return clear;
-  }, [isRunning, clear, timeRemaining > 0]);
+  }, [isRunning, clear]);
 
   const pause = useCallback(() => {
-    clear();
     setIsRunning(false);
-  }, [clear]);
+  }, []);
 
   const resume = useCallback(() => {
-    if (timeRemaining > 0) {
-      setIsRunning(true);
-    }
-  }, [timeRemaining]);
+    setTimeRemaining((prev) => {
+      if (prev > 0) setIsRunning(true);
+      return prev;
+    });
+  }, []);
 
   const stop = useCallback(() => {
-    clear();
     setIsRunning(false);
     setTimeRemaining(0);
-  }, [clear]);
+  }, []);
 
   const penalize = useCallback((seconds: number) => {
     setTimeRemaining((prev) => {
