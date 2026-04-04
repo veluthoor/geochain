@@ -117,7 +117,7 @@ export function ResultScreen({
                     onKeyDown={(e) => e.key === 'Enter' && handleNameSubmit()}
                     placeholder="Your name..."
                     maxLength={20}
-                    className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ocean-400 focus:border-transparent"
+                    className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ocean-400 focus:border-transparent"
                   />
                   <button
                     onClick={handleNameSubmit}
@@ -131,42 +131,42 @@ export function ResultScreen({
           </motion.div>
         )}
 
-        <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <div className="text-3xl font-bold text-ocean-600 dark:text-ocean-400">
                 {state.score.toLocaleString()}
               </div>
-              <div className="text-sm text-gray-400">Score</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Score</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                 {state.chain.length}
               </div>
-              <div className="text-sm text-gray-400">Chain</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Chain</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-gray-900 dark:text-gray-100 capitalize">
                 {state.difficulty}
               </div>
-              <div className="text-sm text-gray-400">Difficulty</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Difficulty</div>
             </div>
           </div>
         </div>
 
         {state.possibleAnswers && state.possibleAnswers.length > 0 && state.currentRule && (
-          <div className="bg-ocean-50 dark:bg-ocean-900/10 border border-ocean-200 dark:border-ocean-800 rounded-2xl p-5">
-            <div className="text-xs uppercase tracking-wider text-ocean-500 font-semibold mb-1">
+          <div className="bg-ocean-50 dark:bg-gray-800 border border-ocean-200 dark:border-gray-700 rounded-2xl p-5">
+            <div className="text-xs uppercase tracking-wider text-ocean-500 dark:text-ocean-300 font-semibold mb-1">
               {state.currentRule.displayText}
             </div>
-            <div className="text-sm text-gray-500 mb-3">
+            <div className="text-sm text-gray-500 dark:text-gray-400 mb-3">
               Possible answers were:
             </div>
             <div className="flex flex-wrap gap-2">
               {state.possibleAnswers.map((answer) => (
                 <span
                   key={answer}
-                  className="bg-white dark:bg-gray-900 rounded-full px-3 py-1 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+                  className="bg-white dark:bg-gray-700 rounded-full px-3 py-1 text-sm font-medium text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600"
                 >
                   {answer}
                 </span>
@@ -175,7 +175,7 @@ export function ResultScreen({
           </div>
         )}
 
-        <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
           <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-3">
             Your Chain
           </h3>
@@ -186,7 +186,7 @@ export function ResultScreen({
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.05 }}
-                className="flex items-center gap-1.5 bg-white dark:bg-gray-800 rounded-full px-3 py-1 text-sm border border-gray-200 dark:border-gray-700"
+                className="flex items-center gap-1.5 bg-white dark:bg-gray-700 rounded-full px-3 py-1 text-sm border border-gray-200 dark:border-gray-600"
               >
                 <span>{link.country.flag}</span>
                 <span className="text-gray-700 dark:text-gray-300">
