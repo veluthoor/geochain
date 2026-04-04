@@ -8,7 +8,7 @@ import { Leaderboard } from './components/screens/Leaderboard';
 
 function App() {
   const {
-    state, stats, leaderboard, playerName, setPlayerName,
+    state, stats, playerName, setPlayerName,
     timer, startGame, submitAnswer, quitGame, saveStats, resetToMenu,
   } = useGame();
   const [showLeaderboard, setShowLeaderboard] = useState(false);
@@ -19,7 +19,6 @@ function App() {
         {showLeaderboard && (
           <Leaderboard
             key="leaderboard"
-            data={leaderboard}
             onBack={() => setShowLeaderboard(false)}
           />
         )}
@@ -47,7 +46,6 @@ function App() {
             key="result"
             state={state}
             stats={stats}
-            leaderboard={leaderboard}
             playerName={playerName}
             onPlayerNameChange={setPlayerName}
             onSaveStats={saveStats}

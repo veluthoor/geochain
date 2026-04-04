@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import type { GameState, PlayerStats, LeaderboardEntry, LeaderboardData } from '../../types';
+import type { GameState, PlayerStats, LeaderboardEntry } from '../../types';
+import { fetchLeaderboard } from '../../firebase';
 
 interface ResultScreenProps {
   state: GameState;
   stats: PlayerStats;
-  leaderboard: LeaderboardData;
   playerName: string;
   onPlayerNameChange: (name: string) => void;
   onSaveStats: () => void;
@@ -20,11 +20,11 @@ const END_MESSAGES: Record<string, string> = {
 
 const MEDAL = ['', '', ''];
 
-function getLeaderboardPosition(score: number, leaderboard: LeaderboardEntry[]): number | null {
-  if (leaderboard.length < 20) {
-    return leaderboard.filter((e) => e.score > score).length + 1;
+function getLeaderboardPosition(score: number, board: LeaderboardEntry[]): number | null {
+  if (board.length < 20) {
+    return board.filter((e) => e.score > score).length + 1;
   }
-  const sorted = [...leaderboard].sort((a, b) => b.score - a.score);
+  const sorted = [...board].sort((a, b) => b.score - a.score);
   if (score <= sorted[sorted.length - 1].score) return null;
   return sorted.filter((e) => e.score > score).length + 1;
 }
@@ -36,22 +36,32 @@ function ordinal(n: number): string {
 }
 
 export function ResultScreen({
-  state, stats, leaderboard, playerName, onPlayerNameChange, onSaveStats, onPlayAgain,
+  state, stats, playerName, onPlayerNameChange, onSaveStats, onPlayAgain,
 }: ResultScreenProps) {
   const [nameInput, setNameInput] = useState(playerName);
   const [saved, setSaved] = useState(false);
+  const [position, setPosition] = useState<number | null>(null);
+  const [positionLoaded, setPositionLoaded] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const diffBoard = leaderboard[state.difficulty] || [];
-  const position = getLeaderboardPosition(state.score, diffBoard);
   const needsName = position !== null && !playerName.trim();
 
+  // Fetch current leaderboard to determine position
   useEffect(() => {
-    if (!needsName && !saved) {
+    fetchLeaderboard(state.difficulty)
+      .then((board) => {
+        setPosition(getLeaderboardPosition(state.score, board));
+      })
+      .catch(() => setPosition(null))
+      .finally(() => setPositionLoaded(true));
+  }, [state.difficulty, state.score]);
+
+  useEffect(() => {
+    if (positionLoaded && !needsName && !saved) {
       onSaveStats();
       setSaved(true);
     }
-  }, [needsName, saved, onSaveStats]);
+  }, [positionLoaded, needsName, saved, onSaveStats]);
 
   useEffect(() => {
     if (needsName) inputRef.current?.focus();
@@ -86,7 +96,7 @@ export function ResultScreen({
           )}
         </div>
 
-        {position !== null && (
+        {positionLoaded && position !== null && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

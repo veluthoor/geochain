@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import type { Difficulty, LeaderboardData } from '../../types';
+import type { Difficulty, LeaderboardEntry } from '../../types';
+import { fetchLeaderboard } from '../../firebase';
 import clsx from 'clsx';
 
 interface LeaderboardProps {
-  data: LeaderboardData;
   onBack: () => void;
 }
 
@@ -20,9 +20,18 @@ function formatDate(iso: string) {
   return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
-export function Leaderboard({ data, onBack }: LeaderboardProps) {
+export function Leaderboard({ onBack }: LeaderboardProps) {
   const [tab, setTab] = useState<Difficulty>('hard');
-  const entries = data[tab] || [];
+  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchLeaderboard(tab)
+      .then(setEntries)
+      .catch(() => setEntries([]))
+      .finally(() => setLoading(false));
+  }, [tab]);
 
   return (
     <motion.div
@@ -55,7 +64,11 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
           ))}
         </div>
 
-        {entries.length === 0 ? (
+        {loading ? (
+          <div className="text-center py-12 text-gray-400">
+            Loading...
+          </div>
+        ) : entries.length === 0 ? (
           <div className="text-center py-12 text-gray-400">
             <div className="text-4xl mb-3">&#127758;</div>
             <p>Play a {tab} game to get on the board!</p>

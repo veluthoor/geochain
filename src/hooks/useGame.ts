@@ -4,6 +4,7 @@ import { initGame, submitAnswer, endGame } from '../engine/gameEngine';
 import { useTimer } from './useTimer';
 import { useLocalStorage } from './useLocalStorage';
 import { INITIAL_STATS } from '../utils/constants';
+import { submitScore } from '../firebase';
 
 export function useGame() {
   const [state, setState] = useState<GameState>({
@@ -86,15 +87,18 @@ export function useGame() {
       ],
     });
 
-    // Add to leaderboard for this difficulty (keep top 20 sorted by score)
+    // Submit to Firebase (fire and forget)
+    const entry: LeaderboardEntry = {
+      playerName: name,
+      score: state.score,
+      chainLength: state.chain.length,
+      difficulty: state.difficulty,
+      date: new Date().toISOString(),
+    };
+    submitScore(entry).catch(console.error);
+
+    // Also update local leaderboard cache
     setLeaderboard((prev) => {
-      const entry: LeaderboardEntry = {
-        playerName: name,
-        score: state.score,
-        chainLength: state.chain.length,
-        difficulty: state.difficulty,
-        date: new Date().toISOString(),
-      };
       const diffBoard = prev[state.difficulty] || [];
       return {
         ...prev,
