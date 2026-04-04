@@ -27,20 +27,18 @@ export function StartScreen({ onStart, onShowLeaderboard, stats, playerName, onP
       exit={{ opacity: 0, y: -20 }}
       className="flex flex-col items-center justify-center min-h-dvh p-6"
     >
-      <div className="max-w-md w-full space-y-7">
-        {/* Logo */}
+      <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <h1 className="text-5xl font-extrabold text-white tracking-tight">
+          <h1 className="text-5xl font-extrabold text-ocean-600 dark:text-ocean-400">
             GeoChain
           </h1>
-          <p className="mt-2 text-purple-300 text-base">
+          <p className="mt-2 text-gray-500 dark:text-gray-400">
             Chain countries together. 2 minutes on the clock.
           </p>
         </div>
 
-        {/* Player name */}
         <div>
-          <label className="block text-sm font-medium text-purple-300 mb-2">
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
             Your Name
           </label>
           <input
@@ -49,13 +47,12 @@ export function StartScreen({ onStart, onShowLeaderboard, stats, playerName, onP
             onChange={(e) => onPlayerNameChange(e.target.value)}
             placeholder="Enter your name..."
             maxLength={20}
-            className="w-full rounded-xl border border-purple-700 bg-purple-900/50 px-4 py-3 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all"
+            className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-3 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ocean-400 focus:border-transparent transition-shadow"
           />
         </div>
 
-        {/* Difficulty */}
         <div>
-          <label className="block text-sm font-medium text-purple-300 mb-3">
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
             Difficulty
           </label>
           <div className="grid grid-cols-2 gap-3">
@@ -64,75 +61,77 @@ export function StartScreen({ onStart, onShowLeaderboard, stats, playerName, onP
                 key={d.value}
                 onClick={() => setDifficulty(d.value)}
                 className={clsx(
-                  'rounded-xl p-4 border transition-all text-center relative',
+                  'rounded-xl p-4 border-2 transition-all text-center relative',
                   difficulty === d.value
-                    ? 'border-purple-400 bg-purple-800/60 text-white shadow-lg shadow-purple-900/50'
-                    : 'border-purple-800 bg-purple-900/30 text-purple-300 hover:border-purple-600 hover:bg-purple-900/50',
+                    ? 'border-ocean-500 bg-ocean-50 dark:bg-ocean-900/20 text-ocean-700 dark:text-ocean-300'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 text-gray-600 dark:text-gray-400',
                 )}
               >
                 {d.tag && (
-                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 text-[10px] font-semibold bg-purple-500 text-white px-2 py-0.5 rounded-full whitespace-nowrap">
+                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 text-[10px] font-semibold bg-ocean-500 text-white px-2 py-0.5 rounded-full whitespace-nowrap">
                     {d.tag}
                   </span>
                 )}
                 <div className="font-bold text-sm">{d.label}</div>
-                <div className="text-xs mt-1 text-purple-400">{d.desc}</div>
+                <div className="text-xs mt-1 opacity-75">{d.desc}</div>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Buttons */}
         <div className="space-y-3">
           <button
             onClick={() => onStart(difficulty, TIME_LIMIT)}
-            className="w-full rounded-xl bg-purple-500 hover:bg-purple-400 text-white font-bold py-4 text-lg transition-colors shadow-lg shadow-purple-900/50 active:scale-[0.98]"
+            className="w-full rounded-xl bg-ocean-500 hover:bg-ocean-600 text-white font-bold py-4 text-lg transition-colors shadow-sm active:scale-[0.98]"
           >
             Start Game
           </button>
           <button
             onClick={onShowLeaderboard}
-            className="w-full rounded-xl border border-purple-700 hover:bg-purple-900/50 text-purple-300 hover:text-white font-semibold py-3 transition-all"
+            className="w-full rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-300 font-semibold py-3 transition-colors"
           >
             Leaderboard
           </button>
         </div>
 
-        {/* Stats */}
         {stats.gamesPlayed > 0 && (
-          <div className="bg-purple-900/40 rounded-xl p-4 text-center border border-purple-800">
-            <div className="text-xs uppercase tracking-wider text-purple-400 font-semibold mb-2">
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-4 text-center border border-gray-100 dark:border-gray-800">
+            <div className="text-xs uppercase tracking-wider text-gray-400 font-semibold mb-2">
               Your Stats
             </div>
             <div className="grid grid-cols-3 gap-4 text-sm">
               <div>
-                <div className="font-bold text-lg text-white">{stats.gamesPlayed}</div>
-                <div className="text-purple-400 text-xs">Games</div>
+                <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                  {stats.gamesPlayed}
+                </div>
+                <div className="text-gray-400 text-xs">Games</div>
               </div>
               <div>
-                <div className="font-bold text-lg text-white">{stats.bestChainLength}</div>
-                <div className="text-purple-400 text-xs">Best Chain</div>
+                <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                  {stats.bestChainLength}
+                </div>
+                <div className="text-gray-400 text-xs">Best Chain</div>
               </div>
               <div>
-                <div className="font-bold text-lg text-gold-400">{stats.bestScore.toLocaleString()}</div>
-                <div className="text-purple-400 text-xs">Best Score</div>
+                <div className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                  {stats.bestScore.toLocaleString()}
+                </div>
+                <div className="text-gray-400 text-xs">Best Score</div>
               </div>
             </div>
-            <div className="mt-2 text-xs text-purple-500">
+            <div className="mt-2 text-xs text-gray-400">
               {stats.countriesLearned.length} countries explored
             </div>
           </div>
         )}
-
-        {/* Footer */}
-        <div className="text-center text-xs text-purple-500 pt-2">
+        <div className="text-center text-xs text-gray-400 dark:text-gray-500 pt-4">
           Made with lots of love by a fellow geography quiz enthusiast :){' '}
           Drop any feedback to me over X{' '}
           <a
             href="https://x.com/veluthoor"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-purple-400 hover:text-purple-300 underline underline-offset-2"
+            className="text-ocean-500 hover:underline"
           >
             @veluthoor
           </a>

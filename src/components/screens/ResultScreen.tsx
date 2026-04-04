@@ -70,9 +70,8 @@ export function ResultScreen({
       className="flex flex-col items-center justify-center min-h-dvh p-6"
     >
       <div className="max-w-lg w-full space-y-6">
-        {/* Header */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-white">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
             {END_MESSAGES[state.endReason ?? 'quit']}
           </h2>
           {isNewBest && (
@@ -80,34 +79,33 @@ export function ResultScreen({
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', delay: 0.3 }}
-              className="mt-2 text-gold-400 font-bold text-lg"
+              className="mt-2 text-gold-500 font-bold text-lg"
             >
               New personal best!
             </motion.div>
           )}
         </div>
 
-        {/* Leaderboard placement */}
         {position !== null && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="bg-gold-500/10 border border-gold-500/30 rounded-2xl p-5 text-center"
+            className="bg-gold-500/5 border border-gold-400/30 rounded-2xl p-5 text-center"
           >
             <div className="text-3xl mb-1">
               {position <= 3 ? MEDAL[position - 1] : ''}
             </div>
-            <div className="text-lg font-bold text-gold-400">
+            <div className="text-lg font-bold text-gold-600 dark:text-gold-400">
               You made the leaderboard!
             </div>
-            <div className="text-sm text-purple-300 mt-1">
+            <div className="text-sm text-gray-500 mt-1">
               {ordinal(position)} place
             </div>
 
             {needsName && (
               <div className="mt-4">
-                <p className="text-sm text-purple-300 mb-3">
+                <p className="text-sm text-gray-500 mb-3">
                   Enter your name for the leaderboard:
                 </p>
                 <div className="flex gap-2">
@@ -119,11 +117,11 @@ export function ResultScreen({
                     onKeyDown={(e) => e.key === 'Enter' && handleNameSubmit()}
                     placeholder="Your name..."
                     maxLength={20}
-                    className="flex-1 rounded-xl border border-purple-700 bg-purple-900/50 px-4 py-2.5 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent"
+                    className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ocean-400 focus:border-transparent"
                   />
                   <button
                     onClick={handleNameSubmit}
-                    className="rounded-xl bg-gold-500 hover:bg-gold-400 text-purple-950 font-semibold px-5 py-2.5 transition-colors"
+                    className="rounded-xl bg-ocean-500 hover:bg-ocean-600 text-white font-semibold px-5 py-2.5 transition-colors"
                   >
                     Save
                   </button>
@@ -133,44 +131,42 @@ export function ResultScreen({
           </motion.div>
         )}
 
-        {/* Score summary */}
-        <div className="bg-purple-900/40 rounded-2xl border border-purple-800 p-6">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <div className="text-3xl font-bold text-purple-200">
+              <div className="text-3xl font-bold text-ocean-600 dark:text-ocean-400">
                 {state.score.toLocaleString()}
               </div>
-              <div className="text-sm text-purple-400">Score</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Score</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-white">
+              <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                 {state.chain.length}
               </div>
-              <div className="text-sm text-purple-400">Chain</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Chain</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-white capitalize">
+              <div className="text-3xl font-bold text-gray-900 dark:text-gray-100 capitalize">
                 {state.difficulty}
               </div>
-              <div className="text-sm text-purple-400">Difficulty</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Difficulty</div>
             </div>
           </div>
         </div>
 
-        {/* Possible answers */}
         {state.possibleAnswers && state.possibleAnswers.length > 0 && state.currentRule && (
-          <div className="bg-purple-900/40 border border-purple-800 rounded-2xl p-5">
-            <div className="text-xs uppercase tracking-wider text-purple-400 font-semibold mb-1">
+          <div className="bg-ocean-50 dark:bg-gray-800 border border-ocean-200 dark:border-gray-700 rounded-2xl p-5">
+            <div className="text-xs uppercase tracking-wider text-ocean-500 dark:text-ocean-300 font-semibold mb-1">
               {state.currentRule.displayText}
             </div>
-            <div className="text-sm text-purple-300 mb-3">
+            <div className="text-sm text-gray-500 dark:text-gray-400 mb-3">
               Possible answers were:
             </div>
             <div className="flex flex-wrap gap-2">
               {state.possibleAnswers.map((answer) => (
                 <span
                   key={answer}
-                  className="bg-purple-800/60 rounded-full px-3 py-1 text-sm font-medium text-purple-100 border border-purple-700"
+                  className="bg-white dark:bg-gray-700 rounded-full px-3 py-1 text-sm font-medium text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600"
                 >
                   {answer}
                 </span>
@@ -179,9 +175,8 @@ export function ResultScreen({
           </div>
         )}
 
-        {/* Chain review */}
-        <div className="bg-purple-900/40 rounded-2xl border border-purple-800 p-6">
-          <h3 className="font-bold text-white mb-3">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+          <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-3">
             Your Chain
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -191,10 +186,10 @@ export function ResultScreen({
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.05 }}
-                className="flex items-center gap-1.5 bg-purple-800/60 rounded-full px-3 py-1 text-sm border border-purple-700"
+                className="flex items-center gap-1.5 bg-white dark:bg-gray-700 rounded-full px-3 py-1 text-sm border border-gray-200 dark:border-gray-600"
               >
                 <span>{link.country.flag}</span>
-                <span className="text-purple-100">
+                <span className="text-gray-700 dark:text-gray-300">
                   {link.country.name}
                 </span>
               </motion.div>
@@ -202,16 +197,14 @@ export function ResultScreen({
           </div>
         </div>
 
-        {/* Countries learned */}
-        <div className="text-center text-sm text-purple-400">
+        <div className="text-center text-sm text-gray-400">
           {stats.countriesLearned.length} countries explored across {stats.gamesPlayed} games
         </div>
 
-        {/* Play again */}
         <button
           onClick={onPlayAgain}
           disabled={needsName}
-          className="w-full rounded-xl bg-purple-500 hover:bg-purple-400 disabled:bg-purple-800 disabled:text-purple-500 text-white font-bold py-4 text-lg transition-colors shadow-lg shadow-purple-900/50 active:scale-[0.98] disabled:cursor-not-allowed"
+          className="w-full rounded-xl bg-ocean-500 hover:bg-ocean-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 text-white font-bold py-4 text-lg transition-colors shadow-sm active:scale-[0.98] disabled:cursor-not-allowed"
         >
           Play Again
         </button>

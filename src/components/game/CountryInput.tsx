@@ -86,21 +86,21 @@ export function CountryInput({ onSubmit, disabled, hideAutocomplete }: CountryIn
           onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
           placeholder="Type a country name..."
           disabled={disabled}
-          className="flex-1 rounded-xl border border-purple-700 bg-purple-900/50 px-4 py-3 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent disabled:opacity-50 transition-all"
+          className="flex-1 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ocean-400 focus:border-transparent disabled:opacity-50 transition-shadow"
           autoComplete="off"
           spellCheck={false}
         />
         <button
           onClick={() => handleSubmit(selectedIndex >= 0 ? suggestions[selectedIndex]?.name ?? value : value)}
           disabled={disabled || !value.trim()}
-          className="rounded-xl bg-purple-500 hover:bg-purple-400 disabled:bg-purple-800 disabled:text-purple-500 text-white font-semibold px-6 py-3 transition-colors disabled:cursor-not-allowed"
+          className="rounded-xl bg-ocean-500 hover:bg-ocean-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 text-white font-semibold px-6 py-3 transition-colors disabled:cursor-not-allowed"
         >
           Go
         </button>
       </div>
 
       {showSuggestions && (
-        <div className="absolute top-full left-0 right-12 mt-1 bg-purple-900 border border-purple-700 rounded-xl shadow-xl overflow-hidden z-10">
+        <div className="absolute top-full left-0 right-12 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg overflow-hidden z-10">
           {suggestions.map((country, i) => (
             <button
               key={country.code}
@@ -111,13 +111,13 @@ export function CountryInput({ onSubmit, disabled, hideAutocomplete }: CountryIn
               className={clsx(
                 'w-full text-left px-4 py-2.5 flex items-center gap-3 transition-colors',
                 i === selectedIndex
-                  ? 'bg-purple-800 text-white'
-                  : 'text-purple-200 hover:bg-purple-800/50',
+                  ? 'bg-ocean-50 dark:bg-ocean-900/40 text-ocean-800 dark:text-ocean-200'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-750',
               )}
             >
               <span className="text-lg">{country.flag}</span>
               <span className="font-medium">{country.name}</span>
-              <span className="text-xs text-purple-400 ml-auto">
+              <span className="text-xs text-gray-400 ml-auto">
                 {country.continent}
               </span>
             </button>

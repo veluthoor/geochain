@@ -33,13 +33,12 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
     >
       <div className="max-w-lg w-full space-y-6">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold text-white">
+          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">
             Leaderboard
           </h1>
         </div>
 
-        {/* Tabs */}
-        <div className="flex rounded-xl bg-purple-900/60 p-1 border border-purple-800">
+        <div className="flex rounded-xl bg-gray-100 dark:bg-gray-900 p-1">
           {TABS.map((t) => (
             <button
               key={t.value}
@@ -47,8 +46,8 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
               className={clsx(
                 'flex-1 rounded-lg py-2 text-sm font-semibold transition-all',
                 tab === t.value
-                  ? 'bg-purple-700 text-white shadow-sm'
-                  : 'text-purple-400 hover:text-purple-200',
+                  ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300',
               )}
             >
               {t.label}
@@ -57,21 +56,19 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
         </div>
 
         {entries.length === 0 ? (
-          <div className="text-center py-12 text-purple-400">
+          <div className="text-center py-12 text-gray-400">
             <div className="text-4xl mb-3">&#127758;</div>
             <p>Play a {tab} game to get on the board!</p>
           </div>
         ) : (
-          <div className="bg-purple-900/40 rounded-2xl border border-purple-800 overflow-hidden">
-            {/* Header */}
-            <div className="grid grid-cols-[2.5rem_1fr_4.5rem_4rem] gap-2 px-4 py-3 border-b border-purple-800 text-xs font-semibold uppercase tracking-wider text-purple-400">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+            <div className="grid grid-cols-[2.5rem_1fr_4.5rem_4rem] gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 text-xs font-semibold uppercase tracking-wider text-gray-400">
               <div>#</div>
               <div>Player</div>
               <div className="text-right">Score</div>
               <div className="text-right">Chain</div>
             </div>
 
-            {/* Rows */}
             {entries.map((entry, i) => (
               <motion.div
                 key={`${entry.date}-${i}`}
@@ -81,28 +78,28 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
                 className={clsx(
                   'grid grid-cols-[2.5rem_1fr_4.5rem_4rem] gap-2 px-4 py-3 items-center',
                   i < 3 && 'bg-gold-500/5',
-                  i >= 3 && i % 2 === 0 && 'bg-purple-900/20',
+                  i >= 3 && i % 2 === 0 && 'bg-gray-50/50 dark:bg-gray-800/30',
                 )}
               >
-                <div className="text-sm font-bold text-purple-400">
+                <div className="text-sm font-bold text-gray-400">
                   {i < 3 ? MEDAL[i] : i + 1}
                 </div>
                 <div className="min-w-0">
                   <div className={clsx(
                     'font-semibold text-sm truncate',
-                    i < 3 ? 'text-white' : 'text-purple-200',
+                    i < 3 ? 'text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300',
                   )}>
                     {entry.playerName}
                   </div>
-                  <div className="text-xs text-purple-500">{formatDate(entry.date)}</div>
+                  <div className="text-xs text-gray-400">{formatDate(entry.date)}</div>
                 </div>
                 <div className={clsx(
                   'text-right font-bold text-sm tabular-nums',
-                  i === 0 ? 'text-gold-400' : 'text-purple-200',
+                  i === 0 ? 'text-gold-500' : 'text-ocean-600 dark:text-ocean-400',
                 )}>
                   {entry.score.toLocaleString()}
                 </div>
-                <div className="text-right text-sm tabular-nums text-purple-300 font-medium">
+                <div className="text-right text-sm tabular-nums text-gray-500 font-medium">
                   {entry.chainLength}
                 </div>
               </motion.div>
@@ -112,7 +109,7 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
 
         <button
           onClick={onBack}
-          className="w-full rounded-xl border border-purple-700 hover:bg-purple-900/50 text-purple-300 hover:text-white font-semibold py-3 transition-all"
+          className="w-full rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-300 font-semibold py-3 transition-colors"
         >
           Back to Menu
         </button>

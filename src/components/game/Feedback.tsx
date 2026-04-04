@@ -7,10 +7,10 @@ interface FeedbackProps {
 }
 
 const styles: Record<string, string> = {
-  correct: 'bg-emerald-900/40 border-emerald-700 text-emerald-200',
-  wrong: 'bg-red-900/40 border-red-700 text-red-200',
-  already_used: 'bg-amber-900/40 border-amber-700 text-amber-200',
-  invalid_country: 'bg-purple-900/40 border-purple-700 text-purple-200',
+  correct: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-800 dark:text-green-200',
+  wrong: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200',
+  already_used: 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200',
+  invalid_country: 'bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300',
 };
 
 export function Feedback({ feedback }: FeedbackProps) {

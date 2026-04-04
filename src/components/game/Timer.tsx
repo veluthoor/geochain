@@ -14,9 +14,9 @@ export function Timer({ timeRemaining }: TimerProps) {
     <div
       className={clsx(
         'text-2xl font-mono font-bold tabular-nums transition-colors',
-        isCritical && 'text-red-400 animate-pulse',
-        isLow && !isCritical && 'text-gold-400',
-        !isLow && 'text-white',
+        isCritical && 'text-red-500 animate-pulse',
+        isLow && !isCritical && 'text-gold-500',
+        !isLow && 'text-gray-900 dark:text-gray-100',
       )}
     >
       {minutes}:{seconds.toString().padStart(2, '0')}

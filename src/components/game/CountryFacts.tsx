@@ -13,25 +13,25 @@ export function CountryFacts({ country }: CountryFactsProps) {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
-        className="bg-purple-900/40 rounded-xl border border-purple-800 p-4 text-sm"
+        className="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 text-sm"
       >
         <div className="text-3xl mb-2">{country.flag}</div>
-        <h3 className="font-bold text-white mb-2">
+        <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-2">
           {country.name}
         </h3>
-        <div className="space-y-1 text-purple-300">
+        <div className="space-y-1 text-gray-500 dark:text-gray-400">
           <div>
-            <span className="text-purple-200">Capital:</span> {country.capital}
+            <span className="text-gray-700 dark:text-gray-300">Capital:</span> {country.capital}
           </div>
           <div>
-            <span className="text-purple-200">Continent:</span> {country.continent}
+            <span className="text-gray-700 dark:text-gray-300">Continent:</span> {country.continent}
           </div>
           <div>
-            <span className="text-purple-200">Population:</span>{' '}
+            <span className="text-gray-700 dark:text-gray-300">Population:</span>{' '}
             {country.population.toLocaleString()}
           </div>
           {country.landlocked && (
-            <div className="text-gold-400 font-medium">
+            <div className="text-gold-600 dark:text-gold-400 font-medium">
               Landlocked
             </div>
           )}
