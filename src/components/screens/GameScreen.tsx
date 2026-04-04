@@ -45,9 +45,10 @@ export function GameScreen({ state, timeRemaining, onSubmit, onReveal, onQuit }:
         <div className="flex-1 flex flex-col gap-4">
           <ChainDisplay chain={state.chain} />
           {state.currentRule && <RuleCard rule={state.currentRule} />}
-          <div className="flex justify-center items-center gap-3">
+          <div className="flex justify-center">
             <CountryInput
               onSubmit={onSubmit}
+              onReveal={state.status === 'playing' ? onReveal : undefined}
               disabled={state.status !== 'playing'}
               hideAutocomplete={
                 state.currentRule?.type === 'starts_with_same' ||
@@ -55,16 +56,6 @@ export function GameScreen({ state, timeRemaining, onSubmit, onReveal, onQuit }:
               }
             />
           </div>
-          {state.status === 'playing' && (
-            <div className="flex justify-center">
-              <button
-                onClick={onReveal}
-                className="text-sm text-gray-400 dark:text-gray-500 hover:text-ocean-500 dark:hover:text-ocean-400 transition-colors"
-              >
-                Stuck? Reveal an answer (-15s)
-              </button>
-            </div>
-          )}
           <Feedback feedback={state.lastFeedback} />
         </div>
 

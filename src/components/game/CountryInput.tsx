@@ -6,11 +6,12 @@ import clsx from 'clsx';
 
 interface CountryInputProps {
   onSubmit: (input: string) => void;
+  onReveal?: () => void;
   disabled?: boolean;
   hideAutocomplete?: boolean;
 }
 
-export function CountryInput({ onSubmit, disabled, hideAutocomplete }: CountryInputProps) {
+export function CountryInput({ onSubmit, onReveal, disabled, hideAutocomplete }: CountryInputProps) {
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState<Country[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -99,6 +100,17 @@ export function CountryInput({ onSubmit, disabled, hideAutocomplete }: CountryIn
         >
           Go
         </button>
+        {onReveal && (
+          <button
+            onClick={onReveal}
+            disabled={disabled}
+            title="Reveal answer (-15s)"
+            className="rounded-xl border border-gold-400 dark:border-gold-500/50 bg-gold-400/10 hover:bg-gold-400/20 disabled:opacity-50 text-gold-600 dark:text-gold-400 px-3 py-3 transition-colors disabled:cursor-not-allowed flex items-center gap-1.5 shrink-0"
+          >
+            <span className="text-base leading-none">{'\u{1F4A1}'}</span>
+            <span className="text-xs font-semibold whitespace-nowrap">-15s</span>
+          </button>
+        )}
       </div>
 
       {showSuggestions && (
