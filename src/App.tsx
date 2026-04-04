@@ -14,7 +14,7 @@ function App() {
   const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   return (
-    <div className="min-h-dvh bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+    <div className="min-h-dvh bg-purple-950 text-gray-100">
       <AnimatePresence mode="wait">
         {showLeaderboard && (
           <Leaderboard

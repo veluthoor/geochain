@@ -25,7 +25,7 @@ export function GameScreen({ state, timeRemaining, onSubmit, onQuit }: GameScree
       exit={{ opacity: 0 }}
       className="min-h-dvh flex flex-col"
     >
-      <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
+      <div className="flex items-center justify-between p-4 border-b border-purple-800/50">
         <ScoreBoard
           score={state.score}
           chainLength={state.chain.length}
@@ -34,7 +34,7 @@ export function GameScreen({ state, timeRemaining, onSubmit, onQuit }: GameScree
         <Timer timeRemaining={timeRemaining} />
         <button
           onClick={onQuit}
-          className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
         >
           Quit
         </button>
