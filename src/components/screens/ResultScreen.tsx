@@ -19,7 +19,7 @@ const END_MESSAGES: Record<string, string> = {
   quit: 'Game ended',
 };
 
-const MEDAL = ['', '', ''];
+const MEDAL = ['\u{1F947}', '\u{1F948}', '\u{1F949}'];
 
 function getLeaderboardPosition(score: number, board: LeaderboardEntry[]): number | null {
   if (board.length < 20) {

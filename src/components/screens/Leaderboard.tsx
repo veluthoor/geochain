@@ -13,7 +13,7 @@ const TABS: { value: Difficulty; label: string }[] = [
   { value: 'hard', label: 'Hard' },
 ];
 
-const MEDAL = ['', '', ''];
+const MEDAL = ['\u{1F947}', '\u{1F948}', '\u{1F949}'];
 
 function formatDate(iso: string) {
   const d = new Date(iso);
