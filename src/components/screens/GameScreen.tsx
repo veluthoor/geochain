@@ -25,8 +25,7 @@ export function GameScreen({ state, timeRemaining, onSubmit, onQuit }: GameScree
       exit={{ opacity: 0 }}
       className="min-h-dvh flex flex-col"
     >
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
+      <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
         <ScoreBoard
           score={state.score}
           chainLength={state.chain.length}
@@ -41,17 +40,10 @@ export function GameScreen({ state, timeRemaining, onSubmit, onQuit }: GameScree
         </button>
       </div>
 
-      {/* Main area */}
       <div className="flex-1 flex flex-col lg:flex-row p-4 gap-4 max-w-6xl mx-auto w-full">
-        {/* Left: game play */}
         <div className="flex-1 flex flex-col gap-4">
-          {/* Chain */}
           <ChainDisplay chain={state.chain} />
-
-          {/* Rule */}
           {state.currentRule && <RuleCard rule={state.currentRule} />}
-
-          {/* Input */}
           <div className="flex justify-center">
             <CountryInput
               onSubmit={onSubmit}
@@ -62,12 +54,9 @@ export function GameScreen({ state, timeRemaining, onSubmit, onQuit }: GameScree
               }
             />
           </div>
-
-          {/* Feedback */}
           <Feedback feedback={state.lastFeedback} />
         </div>
 
-        {/* Right: country facts */}
         {lastCountry && (
           <div className="lg:w-64 shrink-0">
             <CountryFacts country={lastCountry} />

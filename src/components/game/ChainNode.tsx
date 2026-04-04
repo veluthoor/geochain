@@ -17,15 +17,15 @@ export function ChainNode({ link, index, isLatest }: ChainNodeProps) {
       className="flex items-center gap-1"
     >
       {index > 0 && (
-        <div className="text-gray-400 dark:text-gray-500 mx-1 text-lg select-none">
+        <div className="text-gray-300 dark:text-gray-600 mx-1 text-lg select-none">
           &rarr;
         </div>
       )}
       <div
         className={`flex items-center gap-2 rounded-full px-3 py-1.5 border transition-all ${
           isLatest
-            ? 'bg-ocean-100 dark:bg-ocean-900/50 border-ocean-300 dark:border-ocean-600 shadow-md'
-            : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+            ? 'bg-ocean-50 dark:bg-ocean-900/30 border-ocean-300 dark:border-ocean-700 shadow-sm'
+            : 'bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700'
         }`}
       >
         <span className="text-lg">{link.country.flag}</span>

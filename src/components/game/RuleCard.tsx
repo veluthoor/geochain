@@ -13,12 +13,12 @@ export function RuleCard({ rule }: RuleCardProps) {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
-        className="bg-ocean-50 dark:bg-ocean-900/40 border border-ocean-200 dark:border-ocean-700 rounded-xl px-6 py-4 text-center"
+        className="bg-ocean-50 dark:bg-ocean-900/20 border border-ocean-200 dark:border-ocean-800 rounded-xl px-6 py-4 text-center"
       >
-        <div className="text-xs uppercase tracking-wider text-ocean-600 dark:text-ocean-400 font-semibold mb-1">
+        <div className="text-xs uppercase tracking-wider text-ocean-500 font-semibold mb-1">
           Challenge
         </div>
-        <div className="text-lg font-medium text-ocean-800 dark:text-ocean-200">
+        <div className="text-lg font-medium text-gray-900 dark:text-gray-100">
           {rule.displayText}
         </div>
       </motion.div>

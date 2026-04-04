@@ -21,7 +21,7 @@ function formatDate(iso: string) {
 }
 
 export function Leaderboard({ data, onBack }: LeaderboardProps) {
-  const [tab, setTab] = useState<Difficulty>('easy');
+  const [tab, setTab] = useState<Difficulty>('hard');
   const entries = data[tab] || [];
 
   return (
@@ -33,13 +33,12 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
     >
       <div className="max-w-lg w-full space-y-6">
         <div className="text-center">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">
             Leaderboard
           </h1>
         </div>
 
-        {/* Difficulty tabs */}
-        <div className="flex rounded-xl bg-gray-100 dark:bg-gray-800 p-1">
+        <div className="flex rounded-xl bg-gray-100 dark:bg-gray-900 p-1">
           {TABS.map((t) => (
             <button
               key={t.value}
@@ -47,7 +46,7 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
               className={clsx(
                 'flex-1 rounded-lg py-2 text-sm font-semibold transition-all',
                 tab === t.value
-                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
+                  ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm'
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300',
               )}
             >
@@ -57,21 +56,19 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
         </div>
 
         {entries.length === 0 ? (
-          <div className="text-center py-12 text-gray-400 dark:text-gray-500">
-            <div className="text-4xl mb-3">No games yet</div>
+          <div className="text-center py-12 text-gray-400">
+            <div className="text-4xl mb-3">&#127758;</div>
             <p>Play a {tab} game to get on the board!</p>
           </div>
         ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            {/* Header */}
-            <div className="grid grid-cols-[2.5rem_1fr_4.5rem_4rem] gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-800/80 border-b border-gray-200 dark:border-gray-700 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+            <div className="grid grid-cols-[2.5rem_1fr_4.5rem_4rem] gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 text-xs font-semibold uppercase tracking-wider text-gray-400">
               <div>#</div>
               <div>Player</div>
               <div className="text-right">Score</div>
               <div className="text-right">Chain</div>
             </div>
 
-            {/* Rows */}
             {entries.map((entry, i) => (
               <motion.div
                 key={`${entry.date}-${i}`}
@@ -81,10 +78,10 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
                 className={clsx(
                   'grid grid-cols-[2.5rem_1fr_4.5rem_4rem] gap-2 px-4 py-3 items-center',
                   i < 3 && 'bg-gold-500/5',
-                  i % 2 === 0 && i >= 3 && 'bg-gray-50/50 dark:bg-gray-800/30',
+                  i >= 3 && i % 2 === 0 && 'bg-gray-50/50 dark:bg-gray-800/30',
                 )}
               >
-                <div className="text-sm font-bold text-gray-400 dark:text-gray-500">
+                <div className="text-sm font-bold text-gray-400">
                   {i < 3 ? MEDAL[i] : i + 1}
                 </div>
                 <div className="min-w-0">
@@ -102,7 +99,7 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
                 )}>
                   {entry.score.toLocaleString()}
                 </div>
-                <div className="text-right text-sm tabular-nums text-earth-600 dark:text-earth-400 font-medium">
+                <div className="text-right text-sm tabular-nums text-gray-500 font-medium">
                   {entry.chainLength}
                 </div>
               </motion.div>
@@ -112,7 +109,7 @@ export function Leaderboard({ data, onBack }: LeaderboardProps) {
 
         <button
           onClick={onBack}
-          className="w-full rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-3 transition-colors"
+          className="w-full rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-300 font-semibold py-3 transition-colors"
         >
           Back to Menu
         </button>
