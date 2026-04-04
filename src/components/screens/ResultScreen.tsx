@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import type { GameState, PlayerStats, LeaderboardEntry } from '../../types';
 import { fetchLeaderboard } from '../../firebase';
+import clsx from 'clsx';
 
 interface ResultScreenProps {
   state: GameState;
@@ -42,6 +43,7 @@ export function ResultScreen({
   const [saved, setSaved] = useState(false);
   const [position, setPosition] = useState<number | null>(null);
   const [positionLoaded, setPositionLoaded] = useState(false);
+  const [board, setBoard] = useState<LeaderboardEntry[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const needsName = position !== null && !playerName.trim();
@@ -49,12 +51,22 @@ export function ResultScreen({
   // Fetch current leaderboard to determine position
   useEffect(() => {
     fetchLeaderboard(state.difficulty)
-      .then((board) => {
-        setPosition(getLeaderboardPosition(state.score, board));
+      .then((entries) => {
+        setBoard(entries);
+        setPosition(getLeaderboardPosition(state.score, entries));
       })
       .catch(() => setPosition(null))
       .finally(() => setPositionLoaded(true));
   }, [state.difficulty, state.score]);
+
+  // Re-fetch after save to show updated board with player's entry
+  useEffect(() => {
+    if (saved) {
+      fetchLeaderboard(state.difficulty)
+        .then(setBoard)
+        .catch(() => {});
+    }
+  }, [saved, state.difficulty]);
 
   useEffect(() => {
     if (positionLoaded && !needsName && !saved) {
@@ -72,6 +84,7 @@ export function ResultScreen({
   };
 
   const isNewBest = state.chain.length >= stats.bestChainLength || state.score >= stats.bestScore;
+  const currentName = playerName || 'Anonymous';
 
   return (
     <motion.div
@@ -141,6 +154,7 @@ export function ResultScreen({
           </motion.div>
         )}
 
+        {/* Score summary */}
         <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
@@ -164,6 +178,56 @@ export function ResultScreen({
           </div>
         </div>
 
+        {/* Mini leaderboard */}
+        {board.length > 0 && (
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="font-bold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-wider">
+                Leaderboard — {state.difficulty}
+              </h3>
+            </div>
+            {board.slice(0, 10).map((entry, i) => {
+              const isMe = entry.playerName === currentName && entry.score === state.score;
+              return (
+                <div
+                  key={`${entry.date}-${i}`}
+                  className={clsx(
+                    'grid grid-cols-[2rem_1fr_4rem_3.5rem] gap-2 px-4 py-2.5 items-center text-sm',
+                    isMe
+                      ? 'bg-ocean-500/10 border-l-2 border-ocean-500'
+                      : i < 3
+                        ? 'bg-gold-500/5'
+                        : i % 2 === 0
+                          ? 'bg-gray-50/50 dark:bg-gray-800/30'
+                          : '',
+                  )}
+                >
+                  <div className="font-bold text-gray-400">
+                    {i < 3 ? MEDAL[i] : i + 1}
+                  </div>
+                  <div className={clsx(
+                    'font-medium truncate',
+                    isMe ? 'text-ocean-600 dark:text-ocean-400' : 'text-gray-700 dark:text-gray-300',
+                  )}>
+                    {entry.playerName}
+                    {isMe && <span className="text-xs ml-1.5 text-ocean-500">(you)</span>}
+                  </div>
+                  <div className={clsx(
+                    'text-right font-bold tabular-nums',
+                    isMe ? 'text-ocean-600 dark:text-ocean-400' : i === 0 ? 'text-gold-500' : 'text-gray-500 dark:text-gray-400',
+                  )}>
+                    {entry.score.toLocaleString()}
+                  </div>
+                  <div className="text-right tabular-nums text-gray-400">
+                    {entry.chainLength}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Possible answers */}
         {state.possibleAnswers && state.possibleAnswers.length > 0 && state.currentRule && (
           <div className="bg-ocean-50 dark:bg-gray-800 border border-ocean-200 dark:border-gray-700 rounded-2xl p-5">
             <div className="text-xs uppercase tracking-wider text-ocean-500 dark:text-ocean-300 font-semibold mb-1">
@@ -185,6 +249,7 @@ export function ResultScreen({
           </div>
         )}
 
+        {/* Chain review */}
         <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
           <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-3">
             Your Chain
