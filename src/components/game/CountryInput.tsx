@@ -45,6 +45,8 @@ export function CountryInput({ onSubmit, disabled, hideAutocomplete }: CountryIn
       setSuggestions([]);
       setShowSuggestions(false);
       setSelectedIndex(-1);
+      // Re-focus input to keep mobile keyboard open
+      requestAnimationFrame(() => inputRef.current?.focus());
     },
     [onSubmit, disabled],
   );
