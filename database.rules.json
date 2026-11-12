@@ -1,0 +1,34 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "leaderboard": {
+      "$difficulty": {
+        ".read": "$difficulty === 'easy' || $difficulty === 'hard'",
+        ".indexOn": ["score"],
+        "$entryId": {
+          ".write": "($difficulty === 'easy' || $difficulty === 'hard') && !data.exists() && newData.exists()",
+          ".validate": "newData.hasChildren(['playerName', 'score', 'chainLength', 'difficulty', 'date'])",
+          "playerName": {
+            ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 20"
+          },
+          "score": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= newData.parent().child('chainLength').val() * 600"
+          },
+          "chainLength": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 197"
+          },
+          "difficulty": {
+            ".validate": "newData.val() === $difficulty"
+          },
+          "date": {
+            ".validate": "newData.isString() && newData.val().length <= 30"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      }
+    }
+  }
+}
