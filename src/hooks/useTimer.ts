@@ -7,6 +7,11 @@ interface UseTimerOptions {
 export function useTimer({ onExpire }: UseTimerOptions) {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  // Bumped on every start() so the interval effect re-runs even when
+  // isRunning is already true (e.g. Start tapped twice during the screen
+  // transition). Without this, start() cleared the live interval and the
+  // effect never recreated it, freezing the clock.
+  const [runId, setRunId] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const onExpireRef = useRef(onExpire);
   onExpireRef.current = onExpire;
@@ -19,10 +24,10 @@ export function useTimer({ onExpire }: UseTimerOptions) {
   }, []);
 
   const start = useCallback((seconds: number) => {
-    clear();
     setTimeRemaining(seconds);
     setIsRunning(true);
-  }, [clear]);
+    setRunId((id) => id + 1);
+  }, []);
 
   useEffect(() => {
     if (!isRunning) {
@@ -42,7 +47,7 @@ export function useTimer({ onExpire }: UseTimerOptions) {
     }, 1000);
 
     return clear;
-  }, [isRunning, clear]);
+  }, [isRunning, runId, clear]);
 
   const pause = useCallback(() => {
     setIsRunning(false);
