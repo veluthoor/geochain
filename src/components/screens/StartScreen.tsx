@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Difficulty, PlayerStats } from '../../types';
-import { TIME_LIMIT } from '../../utils/constants';
+import {
+  TIME_LIMIT,
+  BASE_POINTS,
+  STREAK_BONUS,
+  MAX_STREAK_BONUS,
+  DIFFICULTY_MULTIPLIER,
+} from '../../utils/constants';
 import clsx from 'clsx';
 
 interface StartScreenProps {
@@ -16,6 +22,10 @@ const DIFFICULTIES: { value: Difficulty; label: string; desc: string; tag?: stri
   { value: 'easy', label: 'Easy', desc: 'Borders, continents & letters' },
   { value: 'hard', label: 'Hard', desc: 'All rule types, 2x points', tag: 'For geography enthusiasts' },
 ];
+
+// Streak length at which the bonus reaches its cap (8 with current values).
+const STREAK_FOR_MAX_BONUS = Math.ceil(MAX_STREAK_BONUS / STREAK_BONUS);
+const MAX_POINTS_PER_ANSWER = BASE_POINTS + MAX_STREAK_BONUS;
 
 export function StartScreen({ onStart, onShowLeaderboard, stats, playerName, onPlayerNameChange }: StartScreenProps) {
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
@@ -92,6 +102,25 @@ export function StartScreen({ onStart, onShowLeaderboard, stats, playerName, onP
           >
             Leaderboard
           </button>
+        </div>
+
+        <div className="rounded-xl p-4 border border-gray-200 dark:border-gray-800 text-sm text-gray-600 dark:text-gray-400">
+          <div className="text-xs uppercase tracking-wider text-gray-400 font-semibold mb-2">
+            How scoring works
+          </div>
+          <ul className="space-y-1.5">
+            <li>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{BASE_POINTS} points</span>{' '}
+              for every correct answer.
+            </li>
+            <li>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">Streak bonus:</span>{' '}
+              +{STREAK_BONUS} more for each correct answer in a row, maxing out at +{MAX_STREAK_BONUS}{' '}
+              ({MAX_POINTS_PER_ANSWER} per answer) from your {STREAK_FOR_MAX_BONUS}th in a row.
+            </li>
+            <li>A wrong answer or using a reveal resets your streak.</li>
+            <li>Hard mode gives {DIFFICULTY_MULTIPLIER.hard}x points.</li>
+          </ul>
         </div>
 
         {stats.gamesPlayed > 0 && (
